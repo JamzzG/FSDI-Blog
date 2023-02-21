@@ -33,12 +33,7 @@ class PostUpdateView(UpdateView):
     model = Post
     template_name = "posts/edit.html"
     fields = ["title", "subtitle", "body", "active"]
-
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        # Perform additional actions here
-        return response
+    
 
 class PostDeleteView(DeleteView):
     template_name = "posts/delete.html"
