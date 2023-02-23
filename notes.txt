@@ -9,13 +9,23 @@ New Django Project:
             cd "name of project*
 
     Create and activate new Virtual Environment:
-        python3 -m venv venv && source/bin/activate
+        python3 -m venv venv && source/bin/activate  #(Installs and activates venv in one line)
 
     Install Django within the Virtual Environment:
         pop3 install django
 
     Start new Django project:
         django-admin startproject config .
+
+    Immidiately migrage project files:
+        python3 manage.py migrate
+
+    test django install:
+        python3 manage.py runserver.
+            ctrl+click to test install, you should see the rocket launching:
+        
+    Close server    
+        ctrl+C
 
     Create all apps you think you'll need:
         python3 manage.py startapp pages....or posts....or accounts etc.
@@ -25,8 +35,24 @@ New Django Project:
             code .
                 open config.settings.py:
                     go to INSTALLED_APPS:
-                        add apps you just created
-    
+                        add apps you just created at bottom after all exiting apps..  (add full name when possible)
+                            example: 
+                                instead of just adding:
+                                    'pages'
+                                    try adding:
+                                        'pages.apps.blog' in order to not miss any features.
+
+    update any models inside any apps you've created:
+
+        python manage.py makemigrations cities
+        python manage.py migrate
+
+Once models and migrations are complete you can add Superuser      
+        python3 manage.py createsuperuser
+            -follow prompts  
+
+            
+
     go to folder for one of your appas and edit views.py:
         replace code with :
             from django.views.generic import TemplateView
@@ -92,10 +118,8 @@ go to pages directory and create:
     ]
 
     From TERMINAL:
+     
         python3 manage.py migrate
-
-        python3 manage.py createsuperuser
-            -follow prompts
 
     Launch server to test:
         python3 manage.py runserver 
@@ -177,10 +201,41 @@ class Post(models.Model):
 
     
 
+Adding Meta classe to django:
+
+   class Meta:
+      verbose_name = "Cities" # add verbose_name  here....Django likes to add an "s" at the end of 
+
+        verbose_name is basically a human-readable name for your model
+
+            EXAMPLE:
+
+                    In a models file:
+                        # countries/models.py
+                        from django.db import models
 
 
+                        class Country(models.Model):
+                            name = models.CharField(max_length=255)
+                            state = models.CharField(max_length=255)
 
+                            class Meta:
+                            verbose_name_plural = "countries" 
 
+                            def __str__(self):
+                                return self.name
+
+Django has a 4 way dance for urls.:
+    urls leads to "project level"urls.py file   
+        then..."app level" urls.py file     #best practice (ALWAYS ADD A NAME)
+            then.... "app level" views.py file
+                then..."templates" actual html file.
+
+added admin/posts/post to editable admin page   
+    2/22
+
+worked on search bar
+    imported Q into posts.views.py and amended queries.
 
     
 

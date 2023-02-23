@@ -18,15 +18,8 @@
             </div>
         </div>
         <br>
+        <form action="{% url 'search' %}" method="get">
+            <input name="q" type="text" placeholder="Search...">
+        </form>
     {% endfor %}
-
-
-
-
-
-
-
-
-
-
 {% endblock content %}
