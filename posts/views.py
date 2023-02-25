@@ -11,6 +11,8 @@ from django.views.generic.edit import(
 
 from .models import Post
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin   
+    
 from django.db.models import Q #Q Objects allows for multiple queries
 
 
@@ -24,19 +26,19 @@ class PostDetailView(DetailView):
     model = Post
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = "posts/new.html"
     model = Post
     fields = ["title", "subtitle", "author", "body", "active"]
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = "posts/edit.html"
     fields = ["title", "subtitle", "body", "active"]
     
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "posts/delete.html"
     model = Post
     success_url = reverse_lazy("list")
@@ -65,4 +67,10 @@ class PostSearchView(ListView):
         return object_list
         # (first test line to see if filter is working)
     
+
+
+
+
+
+
     #MVP Minimum Viable Product# Create your views here.

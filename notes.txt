@@ -44,10 +44,11 @@ New Django Project:
 
     update any models inside any apps you've created:
 
-        python manage.py makemigrations cities
+        python manage.py makemigrations posts
         python manage.py migrate
 
-Once models and migrations are complete you can add Superuser      
+Once models and migrations are complete you can add Superuser :
+
         python3 manage.py createsuperuser
             -follow prompts  
 
@@ -117,8 +118,8 @@ go to pages directory and create:
         path("about/", HomePageView.as_view(), name="about"),
     ]
 
-    From TERMINAL:
-     
+    From TERMINAL anytime you add or edit a model:
+
         python3 manage.py migrate
 
     Launch server to test:
@@ -198,10 +199,39 @@ class Post(models.Model):
                         template_name = "posts/delete.html"
                         model = Post
                         success_url = reverse_lazy("list")
+                        
+
+            ***To add authentication to posts/edits/deletes:***
+
+            Import mixins
+                from django.contrib.auth.mixins import LoginRequiredMixin   
+
+            edit any classes that you want to authenticate:
+                example:
+
+                    class PostCreateView(CreateView):
+                        becomes:
+                             class PostCreateView(LoginRequiredMixin, CreateView):
+
+
+            AT THIS POINT THE ADD NEW POST PAGE SHOULD GIVE AN ERROR WHEN LOGGED OUT OF PAGE
+
+    Config.urls.py
+        add:
+                path("accounts/", include("django.contrib.auth.urls")),
+                     
+
+              Django will have templatenames that do exist.
+                but if you create a name and path that copy them it will overrride them.       
+
+
+
+
+
 
     
 
-Adding Meta classe to django:
+Adding Meta class to django:
 
    class Meta:
       verbose_name = "Cities" # add verbose_name  here....Django likes to add an "s" at the end of 
@@ -231,16 +261,22 @@ Django has a 4 way dance for urls.:
             then.... "app level" views.py file
                 then..."templates" actual html file.
 
-added admin/posts/post to editable admin page   
+-added admin/posts/post to editable admin page   
     2/22
 
+
+
 worked on search bar
-    imported Q into posts.views.py and amended queries.
 
-    
+imported Q into posts.views.py and amended queries.
+
+added form for search:
+    <form action="{% url 'search' %}" method="get">
+    <input name="q" type="text" placeholder="Search..." >
 
 
-
+UNPAIRING A GIT REPOSITORY
+rm -rf .git 
 
 
         
