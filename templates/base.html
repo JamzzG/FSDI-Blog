@@ -20,14 +20,17 @@
             <div class="navbar-nav">
             <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
             <a class="nav-link" href="{% url 'about' %}">About</a>
+
             {% if user.is_authenticated %}
                 <a class="nav-link" href="{% url 'list' %}">Posts</a>
-                <a class="nav-link" href="{% url 'new' %}">Submit a Post</a>                
+                <a class="nav-link" href="{% url 'new' %}">Submit a Post</a>
+                <a class="nav-link" href="{% url 'password_change' %}">Change Password</a>                           
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 <form action="{% url 'search' %}" method="get">
                 <input name="q" type="text" placeholder="Search..." >
             {% else %}
                 <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
             {% endif %}
 </form>
             </div>

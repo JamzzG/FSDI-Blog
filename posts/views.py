@@ -2,6 +2,7 @@ from django.views.generic import (
     DetailView,
     ListView,
 )
+
 from django.views.generic.edit import(
     CreateView,
     DeleteView,
@@ -11,7 +12,10 @@ from django.views.generic.edit import(
 
 from .models import Post
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin   
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin
+)  
     
 from django.db.models import Q #Q Objects allows for multiple queries
 
@@ -29,19 +33,34 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = "posts/new.html"
     model = Post
-    fields = ["title", "subtitle", "author", "body", "active"]
+    fields = ["title", "subtitle", "body", "active"]
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin,  UserPassesTestMixin, UpdateView):
     model = Post
     template_name = "posts/edit.html"
     fields = ["title", "subtitle", "body", "active"]
+
+    def test_func(self):
+        user = self.request.user
+        post = self.get_object()
+        return user == post.author
     
 
-class PostDeleteView(LoginRequiredMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = "posts/delete.html"
     model = Post
     success_url = reverse_lazy("list")
+
+    def test_func(self):
+        user = self.request.user
+        post = self.get_object()
+        return user == post.author
+        
 
 class PostSearchView(ListView):
     template_name = "posts/search.html"

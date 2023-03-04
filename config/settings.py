@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-_gjfonp4n+05xn__+m@*5(_*h8)ti&i#ibncwc=yx1t(lb7$!w
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#IF debug = False then you MUST HAVE something in allowed hosts
+# "localhost", "127.0.0.1"
 
 # Application definition
 
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'posts',
-    'static',
+    'accounts',
 ]
 
 MIDDLEWARE = [
