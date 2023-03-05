@@ -221,8 +221,15 @@ class Post(models.Model):
                 path("accounts/", include("django.contrib.auth.urls")),
                      
 
-              Django will have templatenames that do exist.
+Django will have templatenames that do exist.
                 but if you create a name and path that copy them it will overrride them.       
+
+        create new folder inside templates
+            called 
+                registration
+                    create file called
+                        login.html
+                        
 
 
 
@@ -280,3 +287,36 @@ rm -rf .git
 
 
         
+Sample User:  Test1:Demo1234
+
+
+GMAIL TRICK:
+
+Using same GMAIL for testing purposes:
+   granthamjames1000@gmail.com
+   granthamjames1000+random1@gmail.com
+   "random1" could be any string to trick gmail into sending to original but a different inbox
+
+
+
+   Protecting Password
+        in ubuntu download evirons
+            pip3 install "environs[django]"
+
+            settings.py:
+            just afer:
+                from pathlib import Path
+                add:
+                
+                from environs import Env   #adding environment varibles into python code.
+
+                env = Env()
+                env.read_env()
+
+
+
+Backing up environment dependencies:
+    pip3 freeze > requirements.txt
+        verify with:
+            cat requirements.txt
+                Do this every time you add 3 or more dependencies to the project.

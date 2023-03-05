@@ -3,7 +3,6 @@ from .views import (
     SignUpView,
     ChangePasswordView,
     PasswordChangedView,
-    PasswordResetView
 )
 
 
